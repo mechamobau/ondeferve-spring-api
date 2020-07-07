@@ -36,9 +36,9 @@ public class ConfirmationResource implements ResourceInterface<Confirmation> {
     @Override
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-        Confirmation _event = confirmations.findById(id);
-        if (_event != null) {
-            return ResponseEntity.ok(_event);
+        Confirmation _confirmation = confirmations.findById(id);
+        if (_confirmation != null) {
+            return ResponseEntity.ok(_confirmation);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
