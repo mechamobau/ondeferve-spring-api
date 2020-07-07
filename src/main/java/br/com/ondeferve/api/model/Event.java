@@ -2,6 +2,7 @@ package br.com.ondeferve.api.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,6 +32,9 @@ public class Event extends AbstractEntity {
     
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Photo photo;
 
 
     @Column(name = "name")
@@ -122,6 +126,16 @@ public class Event extends AbstractEntity {
     @JsonProperty
     public void setUser(User user) {
       this.user = user;
+    }
+
+    @JsonIgnore
+    public Photo getPhotos() {
+      return photo;
+    }
+
+    @JsonProperty
+    public void setPhotos(Photo photo) {
+      this.photo = photo;
     }
 
 }
