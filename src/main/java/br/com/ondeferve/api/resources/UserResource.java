@@ -28,33 +28,44 @@ public class UserResource implements ResourceInterface<User> {
     }
 
     @Override
+    @GetMapping
     public ResponseEntity<List<User>> get() {
-        // TODO Auto-generated method stub
-        return null;
+        return ResponseEntity.ok(users.findAll());
     }
 
     @Override
-    public ResponseEntity<?> getById(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+        User _user = users.findById(id);
+        if (_user != null) {
+            return ResponseEntity.ok(_user);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @Override
-    public ResponseEntity<User> post(User obj) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@PostMapping
+	public ResponseEntity<User> post(@RequestBody User obj) {
+		users.create(obj);
+		return ResponseEntity.ok(obj);
+	}
 
     @Override
-    public ResponseEntity<?> put(User obj) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@PutMapping
+	public ResponseEntity<?> put(@RequestBody User obj) {
+		if (users.update(obj)) {
+			return ResponseEntity.ok(obj);				
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();		
+	}
 
-    @Override
-    public ResponseEntity<?> delete(Long id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<?> delete(@PathVariable("id") Long id) {		
+		if (users.delete(id)) {
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	}
 
 }
