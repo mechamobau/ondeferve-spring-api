@@ -9,11 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.dom4j.tree.AbstractEntity;
 
 @Table(name = "user")
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 public class User extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
@@ -27,6 +25,10 @@ public class User extends AbstractEntity {
     private String password;
 
     public User() {
+    }
+
+    public User(Long id) {
+        setId(id);
     }
 
     public String getName() {

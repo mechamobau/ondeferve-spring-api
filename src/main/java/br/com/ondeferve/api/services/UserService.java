@@ -9,40 +9,49 @@ import org.springframework.stereotype.Service;
 import br.com.ondeferve.api.model.User;
 import br.com.ondeferve.api.repositories.UserRepository;
 
+@Service
 public class UserService implements ServiceInterface<User> {
-    
+
     @Autowired
     private UserRepository userRepo;
-    
-    public UserService() {}
+
+    public UserService() {
+    }
 
     @Override
     public User create(User obj) {
-        // TODO Auto-generated method stub
-        return null;
+        userRepo.save(obj);
+        return obj;
     }
 
     @Override
     public User findById(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+        Optional<User> _user = userRepo.findById(id);
+        return _user.orElse(null);
     }
 
     @Override
     public List<User> findAll() {
-        // TODO Auto-generated method stub
-        return null;
+        return userRepo.findAll();
+
     }
 
     @Override
     public boolean update(User obj) {
-        // TODO Auto-generated method stub
+        if (userRepo.existsById(obj.getId())) {
+            userRepo.save(obj);
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean delete(Long id) {
-        // TODO Auto-generated method stub
+        Optional<User> _user = userRepo.findById(id);
+        if (_user.isPresent()) {
+            userRepo.delete(_user.get());
+            return true;
+        }
         return false;
     }
 }
