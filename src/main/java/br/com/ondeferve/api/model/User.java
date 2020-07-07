@@ -2,12 +2,18 @@ package br.com.ondeferve.api.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.dom4j.tree.AbstractEntity;
 
-@Table(name = "users")
+@Table(name = "user")
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "User.authenticate", 
+	            query = "select u from User u where u.email = ?1 and u.password = ?2")
+})
 public class User extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
@@ -20,7 +26,7 @@ public class User extends AbstractEntity {
     @Column(name = "password", length = 60)
     private String password;
 
-    public void Usuario() {
+    public User() {
     }
 
     public String getName() {
