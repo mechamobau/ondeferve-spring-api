@@ -2,23 +2,15 @@ package br.com.ondeferve.api.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import br.com.ondeferve.api.model.User;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,6 +23,10 @@ public class Event extends AbstractEntity {
     
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @OneToMany(cascade = CascadeType.ALL, 
+			   mappedBy = "user")	
+	private List<Confirmation> confirmations;
 
 
     @Column(name = "name")
@@ -123,5 +119,15 @@ public class Event extends AbstractEntity {
     public void setUser(User user) {
       this.user = user;
     }
+
+    @JsonIgnore
+	public List<Confirmation> getConfirmations() {
+		return confirmations;
+	}
+
+	@JsonProperty
+	public void setConfirmations(List<Confirmation> confirmations) {
+		this.confirmations = confirmations;
+	}
 
 }
