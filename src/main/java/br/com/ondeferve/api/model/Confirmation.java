@@ -18,7 +18,7 @@ public class Confirmation extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    
+
     @Column(name = "date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date date;
@@ -30,23 +30,31 @@ public class Confirmation extends AbstractEntity {
         setId(id);
     }
 
+    public Date getDate() {
+        return this.date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     @JsonIgnore
     public User getUser() {
-      return user;
+        return user;
     }
 
     @JsonProperty
     public void setUser(User user) {
-      this.user = user;
+        this.user = user;
     }
 
     @JsonIgnore
     public Event getEvent() {
-      return event;
+        return event;
     }
 
     @JsonProperty
     public void setEvent(Event event) {
-      this.event = event;
+        this.event = event;
     }
 }

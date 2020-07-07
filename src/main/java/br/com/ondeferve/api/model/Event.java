@@ -124,7 +124,6 @@ public class Event extends AbstractEntity {
     }
 
     @JsonIgnore
-<<<<<<< HEAD
     public Photo getPhotos() {
       return photo;
     }
@@ -133,7 +132,6 @@ public class Event extends AbstractEntity {
     public void setPhotos(Photo photo) {
       this.photo = photo;
     }
-=======
 	public List<Confirmation> getConfirmations() {
 		return confirmations;
 	}
@@ -142,6 +140,5 @@ public class Event extends AbstractEntity {
 	public void setConfirmations(List<Confirmation> confirmations) {
 		this.confirmations = confirmations;
 	}
->>>>>>> jhonnatthan
 
 }
