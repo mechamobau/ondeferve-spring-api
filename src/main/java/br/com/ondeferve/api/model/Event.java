@@ -24,12 +24,13 @@ public class Event extends AbstractEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Photo photo;
-    
     @OneToMany(cascade = CascadeType.ALL, 
-			   mappedBy = "user")	
-	private List<Confirmation> confirmations;
+			   mappedBy = "event")	
+    private List<Confirmation> confirmations;
+  
+    @OneToMany(cascade = CascadeType.ALL, 
+          mappedBy = "event")	
+    private List<Photo> photos;
 
 
     @Column(name = "name")
@@ -124,24 +125,23 @@ public class Event extends AbstractEntity {
     }
 
     @JsonIgnore
-<<<<<<< HEAD
-    public Photo getPhotos() {
-      return photo;
+    public List<Photo> getPhotos() {
+      return photos;
     }
 
     @JsonProperty
-    public void setPhotos(Photo photo) {
-      this.photo = photo;
+    public void setPhotos(List<Photo> photos) {
+      this.photos = photos;
     }
-=======
-	public List<Confirmation> getConfirmations() {
-		return confirmations;
-	}
 
-	@JsonProperty
-	public void setConfirmations(List<Confirmation> confirmations) {
-		this.confirmations = confirmations;
-	}
->>>>>>> jhonnatthan
+    @JsonIgnore
+    public List<Confirmation> getConfirmations() {
+      return confirmations;
+    }
+
+    @JsonProperty
+    public void setConfirmations(List<Confirmation> confirmations) {
+      this.confirmations = confirmations;
+    }
 
 }

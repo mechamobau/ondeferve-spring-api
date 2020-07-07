@@ -5,8 +5,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 
@@ -15,16 +21,11 @@ import javax.persistence.Table;
 public class Photo extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
-
-    @OneToMany(cascade = CascadeType.ALL, 
-			   mappedBy = "photo")	
-    private List<Event> events;
-    
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Event event;
 
     @Column(name = "url", length = 255)
     private String url;
-
-    
 
     public Photo() {
     }
@@ -41,5 +42,15 @@ public class Photo extends AbstractEntity {
       this.url = url;
     }
 
+
+    @JsonIgnore
+    public Event getEvents() {
+      return event;
+    }
+
+    @JsonProperty
+    public void setEvents(Event event) {
+      this.event = event;
+    }
     
 }
