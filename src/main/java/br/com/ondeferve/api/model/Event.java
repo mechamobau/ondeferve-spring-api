@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import br.com.ondeferve.api.model.User;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,6 +28,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 public class Event extends AbstractEntity {
     private static final long serialVersionUID = 1L;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
 
     @Column(name = "name")
     private String name;
@@ -108,5 +114,14 @@ public class Event extends AbstractEntity {
       this.lng = lng;
     }
 
+    @JsonIgnore
+    public User getUser() {
+      return user;
+    }
+
+    @JsonProperty
+    public void setUser(User user) {
+      this.user = user;
+    }
 
 }
