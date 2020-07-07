@@ -1,19 +1,19 @@
 package br.com.ondeferve.api.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.dom4j.tree.AbstractEntity;
 
 @Table(name = "user")
 @Entity
-@NamedQueries({
-	@NamedQuery(name = "User.authenticate", 
-	            query = "select u from User u where u.email = ?1 and u.password = ?2")
-})
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 

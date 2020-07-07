@@ -8,10 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-public class AbstractEntity {
-    private static final long serialVersionUID = 1L;
-
-    @Id
+@MappedSuperclass
+public abstract class AbstractEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
+    
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -26,7 +27,8 @@ public class AbstractEntity {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.id != null ? this.id : 0);
+        hash = 53 * hash + 
+                 Objects.hashCode(this.id != null ? this.id : 0);
         return hash;
     }
 
@@ -39,4 +41,5 @@ public class AbstractEntity {
         final AbstractEntity other = (AbstractEntity) obj;
         return Objects.equals(this.id, other.id);
     }
+
 }

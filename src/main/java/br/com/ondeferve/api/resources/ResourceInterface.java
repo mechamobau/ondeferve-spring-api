@@ -1,15 +1,13 @@
 package br.com.ondeferve.api.resources;
 
-import javax.ws.rs.core.Response;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 
 public interface ResourceInterface<T> {
-    Response get();
-
-    Response getById(Long id);
-
-    Response post(T obj);
-
-    Response put(T obj);
-
-    Response delete(Long id);
+	ResponseEntity<List<T>> get();
+	ResponseEntity<?> getById(Long id);
+	ResponseEntity<T> post(T obj);
+	ResponseEntity<?> put(T obj);
+	ResponseEntity<?> delete(Long id);
 }
