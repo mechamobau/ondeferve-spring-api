@@ -10,6 +10,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.com.ondeferve.api.model.Event;
@@ -26,10 +27,8 @@ public class Photo extends AbstractEntity {
     @Column(name = "url", length = 255)
     private String url;
 
-    @OneToMany(cascade = CascadeType.ALL, 
-			   mappedBy = "photo")	
-    private List<Event> events;
-    
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Event event;
 
     public Photo() {
     }
@@ -44,6 +43,17 @@ public class Photo extends AbstractEntity {
 
     public void setUrl(String url) {
       this.url = url;
+    }
+
+
+    @JsonIgnore
+    public Event getEvents() {
+      return event;
+    }
+
+    @JsonProperty
+    public void setEvents(Event event) {
+      this.event = event;
     }
 
     
