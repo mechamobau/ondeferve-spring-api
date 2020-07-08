@@ -19,6 +19,7 @@ import br.com.ondeferve.api.Security.JwtTokenProvider;
 import br.com.ondeferve.api.exception.CustomException;
 import br.com.ondeferve.api.model.User;
 import br.com.ondeferve.api.model.Role;
+import br.com.ondeferve.api.model.TokenResponse;
 import br.com.ondeferve.api.repositories.UserRepository;
 
 @Service
@@ -42,25 +43,31 @@ public class UserService implements ServiceInterface<User> {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public String signin(String username, String password) {                
+    public TokenResponse signin(String username, String password) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-            return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
+
+            String token = jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
+            TokenResponse t = new TokenResponse(token);
+
+            return t;
         } catch (AuthenticationException e) {
             throw new CustomException("Invalid username/password supplied", HttpStatus.OK);
         }
     }
 
-    public String signup(User user) {
+    public TokenResponse signup(User user) {
 
         if (!userRepository.existsByUsername(user.getUsername())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_ADMIN)));
             userRepository.save(user);
 
-            String token = jwtTokenProvider.createToken(user.getUsername(), user.getRoles());            
+            String token = jwtTokenProvider.createToken(user.getUsername(), user.getRoles());
 
-            return token;
+            TokenResponse t = new TokenResponse(token);
+
+            return t;
         } else {
             throw new CustomException("Username is already in use", HttpStatus.OK);
         }

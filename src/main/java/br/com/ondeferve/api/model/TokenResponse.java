@@ -2,17 +2,17 @@ package br.com.ondeferve.api.model;
 
 import java.io.Serializable;
 
-public class Token implements Serializable {
+public class TokenResponse implements Serializable {
 
     private static final long serialVersionUID = -8091879091924046844L;
-    private final String jwttoken;
+    private final String token;
 
-    public Token(String jwttoken) {
-        this.jwttoken = jwttoken;
+    public TokenResponse(String token) {
+        this.token = token;
     }
 
     public String getToken() {
-        return this.jwttoken;
+        return this.token;
     }
 
 }

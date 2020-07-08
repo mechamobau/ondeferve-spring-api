@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ondeferve.api.model.Credentials;
+import br.com.ondeferve.api.model.TokenResponse;
 import br.com.ondeferve.api.model.User;
 import br.com.ondeferve.api.services.UserService;
 
@@ -29,12 +30,12 @@ public class UserResource implements ResourceInterface<User> {
     }
 
     @PostMapping(value = "/signin")
-    public String signUp(@RequestBody Credentials credentials) {
+    public TokenResponse signUp(@RequestBody Credentials credentials) {
         return users.signin(credentials.getUsername(), credentials.getPassword());
     }
 
     @PostMapping(value = "/signup")
-    public String signUp(@RequestBody User user) {
+    public TokenResponse signUp(@RequestBody User user) {
         return users.signup(user);
     }
 

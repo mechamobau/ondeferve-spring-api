@@ -18,8 +18,12 @@ public class ConfirmationService implements ServiceInterface<Confirmation> {
     public ConfirmationService() {
     }
 
-    public List<Confirmation> listByEvent(Integer id) {
+    public List<Confirmation> listByEvent(Long id) {
         return confirmationRepo.findByEventId(id);
+    }
+
+    public boolean verifyConfirmation(Long event_id, Long user_id) {
+        return confirmationRepo.verifyConfirmation(event_id, user_id);
     }
 
     @Override
