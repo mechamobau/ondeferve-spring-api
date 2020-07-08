@@ -27,6 +27,12 @@ public class ConfirmationResource implements ResourceInterface<Confirmation> {
     public ConfirmationResource() {
     }
 
+
+    @GetMapping(value = "/event/{event}")
+    public ResponseEntity<?> getByEventId(@PathVariable("event") Integer event) {
+        return ResponseEntity.ok(confirmations.listByEvent(event));
+    }
+
     @Override
     @GetMapping
     public ResponseEntity<List<Confirmation>> get() {

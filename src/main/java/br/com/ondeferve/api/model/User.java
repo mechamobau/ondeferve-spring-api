@@ -4,13 +4,14 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 
 @Table(name = "user")
 @Entity
@@ -26,13 +27,14 @@ public class User extends AbstractEntity {
     @Column(name = "password", length = 60)
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, 
-			   mappedBy = "user")	
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Event> events;
-    
-    @OneToMany(cascade = CascadeType.ALL, 
-			   mappedBy = "user")	
-	private List<Confirmation> confirmations;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Confirmation> confirmations;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    List<Role> roles;
 
     public User() {
     }
@@ -53,7 +55,7 @@ public class User extends AbstractEntity {
         return username;
     }
 
-    public void setUserusername(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -74,22 +76,30 @@ public class User extends AbstractEntity {
     }
 
     @JsonIgnore
-	public List<Event> getEvents() {
-		return events;
-	}
-
-	@JsonProperty
-	public void setEvents(List<Event> events) {
-		this.events = events;
+    public List<Event> getEvents() {
+        return events;
     }
-    
-    @JsonIgnore
-	public List<Confirmation> getConfirmations() {
-		return confirmations;
-	}
 
-	@JsonProperty
-	public void setConfirmations(List<Confirmation> confirmations) {
-		this.confirmations = confirmations;
-	}
+    @JsonProperty
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    @JsonIgnore
+    public List<Confirmation> getConfirmations() {
+        return confirmations;
+    }
+
+    @JsonProperty
+    public void setConfirmations(List<Confirmation> confirmations) {
+        this.confirmations = confirmations;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 }

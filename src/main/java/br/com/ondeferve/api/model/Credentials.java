@@ -2,17 +2,17 @@ package br.com.ondeferve.api.model;
 
 import java.io.Serializable;
 
-public class JwtRequest implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Credentials implements Serializable {
+
+    private static final long serialVersionUID = 5926468583005150707L;
 
     private String username;
     private String password;
 
-    // need default constructor for JSON Parsing
-    public JwtRequest() {
+    public Credentials() {
     }
 
-    public JwtRequest(String username, String password) {
+    public Credentials(String username, String password) {
         this.setUsername(username);
         this.setPassword(password);
     }
@@ -32,4 +32,5 @@ public class JwtRequest implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

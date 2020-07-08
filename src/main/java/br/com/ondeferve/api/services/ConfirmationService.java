@@ -18,6 +18,10 @@ public class ConfirmationService implements ServiceInterface<Confirmation> {
     public ConfirmationService() {
     }
 
+    public List<Confirmation> listByEvent(Integer id) {
+        return confirmationRepo.findByEventId(id);
+    }
+
     @Override
     public Confirmation create(Confirmation obj) {
         confirmationRepo.save(obj);

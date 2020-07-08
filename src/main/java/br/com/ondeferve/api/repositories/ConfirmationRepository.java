@@ -11,4 +11,6 @@ import br.com.ondeferve.api.model.Confirmation;
 @Repository
 public interface ConfirmationRepository extends JpaRepository<Confirmation, Long> {
 
+    @Query("select c from Confirmation c where c.event.id = ?1")
+    List<Confirmation> findByEventId(Integer id);
 }
