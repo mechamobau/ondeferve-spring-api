@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ondeferve.api.model.Event;
 import br.com.ondeferve.api.model.Photo;
+import br.com.ondeferve.api.services.EventService;
 import br.com.ondeferve.api.services.PhotoService;
 
 @RestController
@@ -24,6 +26,9 @@ public class PhotoResource implements ResourceInterface<Photo> {
     @Autowired
     private PhotoService photos;
 
+    @Autowired
+    private EventService events;
+
     public PhotoResource() {
     }
 
@@ -31,6 +36,17 @@ public class PhotoResource implements ResourceInterface<Photo> {
     @GetMapping
     public ResponseEntity<List<Photo>> get() {
         return ResponseEntity.ok(photos.findAll());
+    }
+
+    @GetMapping(value = "/event/{id}")
+    public ResponseEntity<?> getEventPhotos(@PathVariable("id") Long id) {
+        Event e = events.findById(id);
+
+        if (e != null) {
+            return ResponseEntity.ok(photos.findByEventId(id));
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Evento não encontrado");
     }
 
     @Override
@@ -44,28 +60,28 @@ public class PhotoResource implements ResourceInterface<Photo> {
     }
 
     @Override
-	@PostMapping
-	public ResponseEntity<Photo> post(@RequestBody Photo obj) {
-		photos.create(obj);
-		return ResponseEntity.ok(obj);
-	}
+    @PostMapping
+    public ResponseEntity<Photo> post(@RequestBody Photo obj) {
+        photos.create(obj);
+        return ResponseEntity.ok(obj);
+    }
 
     @Override
-	@PutMapping
-	public ResponseEntity<?> put(@RequestBody Photo obj) {
-		if (photos.update(obj)) {
-			return ResponseEntity.ok(obj);				
-		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();		
-	}
+    @PutMapping
+    public ResponseEntity<?> put(@RequestBody Photo obj) {
+        if (photos.update(obj)) {
+            return ResponseEntity.ok(obj);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 
-	@Override
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") Long id) {		
-		if (photos.delete(id)) {
-			return ResponseEntity.ok().build();
-		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-	}
+    @Override
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        if (photos.delete(id)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 
 }

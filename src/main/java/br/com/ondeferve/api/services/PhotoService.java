@@ -18,6 +18,10 @@ public class PhotoService implements ServiceInterface<Photo> {
     public PhotoService() {
     }
 
+    public List<Photo> findByEventId(Long id) {
+        return photoRepo.findByEventId(id);
+    }
+
     @Override
     public Photo create(Photo obj) {
         photoRepo.save(obj);

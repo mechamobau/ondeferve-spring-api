@@ -11,4 +11,7 @@ import br.com.ondeferve.api.model.Photo;
 @Repository
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
 
+
+    @Query("select p from Photo p where p.event.id = ?1")
+    List<Photo> findByEventId(Long id);
 }
