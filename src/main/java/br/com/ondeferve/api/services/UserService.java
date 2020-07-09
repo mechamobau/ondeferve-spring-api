@@ -43,20 +43,19 @@ public class UserService implements ServiceInterface<User> {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public TokenResponse signin(String username, String password) {
+    public String signin(String username, String password) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
             String token = jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
-            TokenResponse t = new TokenResponse(token);
 
-            return t;
+            return token;
         } catch (AuthenticationException e) {
-            throw new CustomException("Invalid username/password supplied", HttpStatus.OK);
+            return null;
         }
     }
 
-    public TokenResponse signup(User user) {
+    public String signup(User user) {
 
         if (!userRepository.existsByUsername(user.getUsername())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -65,11 +64,9 @@ public class UserService implements ServiceInterface<User> {
 
             String token = jwtTokenProvider.createToken(user.getUsername(), user.getRoles());
 
-            TokenResponse t = new TokenResponse(token);
-
-            return t;
+            return token;
         } else {
-            throw new CustomException("Username is already in use", HttpStatus.OK);
+            return null;
         }
     }
 
@@ -83,6 +80,10 @@ public class UserService implements ServiceInterface<User> {
             throw new CustomException("The user doesn't exist", HttpStatus.OK);
         }
         return user;
+    }
+
+    public User findByUsername(String username) {
+        return userRepo.findByUsername(username);
     }
 
     public User whoami(HttpServletRequest req) {

@@ -17,10 +17,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Confirmation extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Event event;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     public Confirmation() {
@@ -30,7 +30,6 @@ public class Confirmation extends AbstractEntity {
         setId(id);
     }
 
-    @JsonIgnore
     public User getUser() {
         return user;
     }
@@ -39,7 +38,7 @@ public class Confirmation extends AbstractEntity {
     public void setUser(User user) {
         this.user = user;
     }
-
+    
     @JsonIgnore
     public Event getEvent() {
         return event;

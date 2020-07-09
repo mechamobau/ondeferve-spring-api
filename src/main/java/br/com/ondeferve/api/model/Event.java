@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Event extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
@@ -111,17 +111,17 @@ public class Event extends AbstractEntity {
         this.lng = lng;
     }
 
-    @JsonIgnore
+    
     public User getUser() {
         return user;
     }
 
-    @JsonProperty
+    @JsonProperty("creator")
     public void setUser(User user) {
         this.user = user;
     }
 
-    @JsonIgnore
+    
     public List<Photo> getPhotos() {
         return photos;
     }
@@ -131,7 +131,7 @@ public class Event extends AbstractEntity {
         this.photos = photos;
     }
 
-    @JsonIgnore
+    
     public List<Confirmation> getConfirmations() {
         return confirmations;
     }

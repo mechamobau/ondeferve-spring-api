@@ -75,7 +75,7 @@ public class ConfirmationResource implements ResourceInterface<Confirmation> {
         Event e = events.findById(id);
         if (e != null) {
             User u = users.whoami(req);
-            return ResponseEntity.ok(confirmations.verifyConfirmation(id, u.getId()));
+            return ResponseEntity.ok(confirmations.findConfirmation(id, u.getId()));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Event not found");
         }

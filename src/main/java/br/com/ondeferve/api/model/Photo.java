@@ -9,8 +9,6 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 @Table(name = "photo")
 @Entity
 public class Photo extends AbstractEntity {
@@ -30,22 +28,21 @@ public class Photo extends AbstractEntity {
     }
 
     public String getUrl() {
-      return this.url;
+        return this.url;
     }
 
     public void setUrl(String url) {
-      this.url = url;
+        this.url = url;
     }
 
-
     @JsonIgnore
-    public Event getEvents() {
-      return event;
+    public Event getEvent() {
+        return event;
     }
 
     @JsonProperty
-    public void setEvents(Event event) {
-      this.event = event;
+    public void setEvent(Event event) {
+        this.event = event;
     }
-    
+
 }

@@ -26,6 +26,10 @@ public class ConfirmationService implements ServiceInterface<Confirmation> {
         return confirmationRepo.verifyConfirmation(event_id, user_id);
     }
 
+    public Confirmation findConfirmation(Long event_id, Long user_id) {
+        return confirmationRepo.findConfirmation(event_id, user_id);
+    }
+
     @Override
     public Confirmation create(Confirmation obj) {
         confirmationRepo.save(obj);

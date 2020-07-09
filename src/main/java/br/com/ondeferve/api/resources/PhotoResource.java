@@ -49,6 +49,19 @@ public class PhotoResource implements ResourceInterface<Photo> {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Evento não encontrado");
     }
 
+    @PostMapping(value = "/event/{id}")
+    public ResponseEntity<?> postPhoto(@PathVariable("id") Long id, @RequestBody Photo obj) {
+        Event e = events.findById(id);
+
+        if (e != null) {
+            obj.setEvent(e);
+            photos.create(obj);
+            return ResponseEntity.ok(obj);
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Evento não encontrado");
+    }
+
     @Override
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id) {

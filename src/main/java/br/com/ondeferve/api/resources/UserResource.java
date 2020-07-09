@@ -30,13 +30,30 @@ public class UserResource implements ResourceInterface<User> {
     }
 
     @PostMapping(value = "/signin")
-    public TokenResponse signUp(@RequestBody Credentials credentials) {
-        return users.signin(credentials.getUsername(), credentials.getPassword());
+    public ResponseEntity<TokenResponse> signUp(@RequestBody Credentials credentials) {
+        String token = users.signin(credentials.getUsername(), credentials.getPassword());
+
+        if (token != null) {
+            User user = users.findByUsername(credentials.getUsername());
+
+            TokenResponse response = new TokenResponse(token, user);
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
     @PostMapping(value = "/signup")
-    public TokenResponse signUp(@RequestBody User user) {
-        return users.signup(user);
+    public ResponseEntity<TokenResponse> signUp(@RequestBody User user) {
+        String token = users.signup(user);
+
+        if (token != null) {
+
+            TokenResponse response = new TokenResponse(token, user);
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
     @Override
