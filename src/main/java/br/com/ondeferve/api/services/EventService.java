@@ -1,6 +1,5 @@
 package br.com.ondeferve.api.services;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +20,6 @@ public class EventService implements ServiceInterface<Event> {
 
     @Override
     public Event create(Event obj) {
-        Date d = new Date();
-        obj.setDate(d);
         EventRepo.save(obj);
         return obj;
     }

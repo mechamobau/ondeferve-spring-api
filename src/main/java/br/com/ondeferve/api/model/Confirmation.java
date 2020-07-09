@@ -23,23 +23,11 @@ public class Confirmation extends AbstractEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @Column(name = "date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date date;
-
     public Confirmation() {
     }
 
     public Confirmation(Long id) {
         setId(id);
-    }
-
-    public Date getDate() {
-        return this.date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     @JsonIgnore

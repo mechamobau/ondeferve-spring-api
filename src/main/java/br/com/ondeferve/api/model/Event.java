@@ -20,38 +20,35 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 public class Event extends AbstractEntity {
     private static final long serialVersionUID = 1L;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, 
-			   mappedBy = "event")	
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
     private List<Confirmation> confirmations;
-  
-    @OneToMany(cascade = CascadeType.ALL, 
-          mappedBy = "event")	
-    private List<Photo> photos;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+    private List<Photo> photos;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "location")
     private String location;
-    
+
     @Column(name = "description")
     private String description;
-    
+
     @Column(name = "banner")
     private String banner;
-        
+
     @Column(name = "date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date date;
 
     @Column(name = "lat")
     private BigDecimal lat;
-      
+
     @Column(name = "lng")
     private BigDecimal lng;
 
@@ -59,89 +56,89 @@ public class Event extends AbstractEntity {
     }
 
     public String getName() {
-      return name;
+        return name;
     }
 
     public void setName(String name) {
-      this.name = name;
+        this.name = name;
     }
 
     public String getLocation() {
-      return this.location;
+        return this.location;
     }
 
     public void setLocation(String location) {
-      this.location = location;
+        this.location = location;
     }
 
     public String getDescription() {
-      return this.description;
+        return this.description;
     }
 
     public void setDescription(String description) {
-      this.description = description;
+        this.description = description;
     }
 
     public String getBanner() {
-      return this.banner;
+        return this.banner;
     }
 
     public void setBanner(String banner) {
-      this.banner = banner;
+        this.banner = banner;
     }
 
     public Date getDate() {
-      return this.date;
+        return this.date;
     }
 
     public void setDate(Date date) {
-      this.date = date;
+        this.date = date;
     }
 
     public BigDecimal getLat() {
-      return this.lat;
+        return this.lat;
     }
 
     public void setLat(BigDecimal lat) {
-      this.lat = lat;
+        this.lat = lat;
     }
 
     public BigDecimal getLng() {
-      return this.lng;
+        return this.lng;
     }
 
     public void setLng(BigDecimal lng) {
-      this.lng = lng;
+        this.lng = lng;
     }
 
     @JsonIgnore
     public User getUser() {
-      return user;
+        return user;
     }
 
     @JsonProperty
     public void setUser(User user) {
-      this.user = user;
+        this.user = user;
     }
 
     @JsonIgnore
     public List<Photo> getPhotos() {
-      return photos;
+        return photos;
     }
 
     @JsonProperty
     public void setPhotos(List<Photo> photos) {
-      this.photos = photos;
+        this.photos = photos;
     }
 
     @JsonIgnore
     public List<Confirmation> getConfirmations() {
-      return confirmations;
+        return confirmations;
     }
 
     @JsonProperty
     public void setConfirmations(List<Confirmation> confirmations) {
-      this.confirmations = confirmations;
+        this.confirmations = confirmations;
     }
 
 }

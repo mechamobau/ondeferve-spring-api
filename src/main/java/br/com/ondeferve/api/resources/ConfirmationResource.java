@@ -1,11 +1,9 @@
 package br.com.ondeferve.api.resources;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,11 +54,9 @@ public class ConfirmationResource implements ResourceInterface<Confirmation> {
             boolean isConfirmed = confirmations.verifyConfirmation(id, u.getId());
 
             if (!isConfirmed) {
-                Date d = new Date();
                 Confirmation c = new Confirmation();
                 c.setEvent(e);
                 c.setUser(u);
-                c.setDate(d);
 
                 confirmations.create(c);
                 return ResponseEntity.ok(c);
