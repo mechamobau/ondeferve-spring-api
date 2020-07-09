@@ -45,7 +45,7 @@ public class ConfirmationResource implements ResourceInterface<Confirmation> {
     }
 
     @PostMapping(value = "/event/{id}")
-    public ResponseEntity<Confirmation> post(@PathVariable("id") Long id, HttpServletRequest req) {
+    public ResponseEntity<?> confirm(@PathVariable("id") Long id, HttpServletRequest req) {
         Event e = events.findById(id);
 
         if (e != null) {
@@ -61,12 +61,24 @@ public class ConfirmationResource implements ResourceInterface<Confirmation> {
                 confirmations.create(c);
                 return ResponseEntity.ok(c);
             } else {
-                return ResponseEntity.status(HttpStatus.CONFLICT).build();
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Você já confirmou este evento");
+
             }
 
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    @GetMapping(value = "/me/{id}")
+    public ResponseEntity<?> getConfirmation(@PathVariable("id") Long id, HttpServletRequest req) {
+        Event e = events.findById(id);
+        if (e != null) {
+            User u = users.whoami(req);
+            return ResponseEntity.ok(confirmations.verifyConfirmation(id, u.getId()));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Event not found");
+        }
     }
 
     @Override
@@ -82,7 +94,7 @@ public class ConfirmationResource implements ResourceInterface<Confirmation> {
         if (_confirmation != null) {
             return ResponseEntity.ok(_confirmation);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Event not found");
     }
 
     @Override
@@ -98,7 +110,7 @@ public class ConfirmationResource implements ResourceInterface<Confirmation> {
         if (confirmations.update(obj)) {
             return ResponseEntity.ok(obj);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Event not found");
     }
 
     @Override
@@ -107,7 +119,7 @@ public class ConfirmationResource implements ResourceInterface<Confirmation> {
         if (confirmations.delete(id)) {
             return ResponseEntity.ok().build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Event not found");
     }
 
 }

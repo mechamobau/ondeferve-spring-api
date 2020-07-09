@@ -22,7 +22,7 @@ public class ConfirmationService implements ServiceInterface<Confirmation> {
         return confirmationRepo.findByEventId(id);
     }
 
-    public boolean verifyConfirmation(Long event_id, Long user_id) {
+    public Boolean verifyConfirmation(Long event_id, Long user_id) {
         return confirmationRepo.verifyConfirmation(event_id, user_id);
     }
 
